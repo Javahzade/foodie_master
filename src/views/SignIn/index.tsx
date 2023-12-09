@@ -4,14 +4,15 @@ import { MyInput } from "../../components/MyInput";
 import { useNavigation } from "@react-navigation/native";
 
 
-const SignInView = () => {
+const SignIn = () => {
     const navigation = useNavigation()
   
     const [emailValue, setEmailValue] = useState('');
     const [passwordValue, setPasswordValue] = useState('');
  
-    
-   
+    const onChangeEmail = (text: string) => {
+        setEmailValue(text)
+    }   
     const onChangePassword = (text: string) => {
         setPasswordValue(text)
     }
@@ -41,7 +42,7 @@ navigation.navigate('SignUp')
     )
 };
 
-export default SignInView;
+export default SignIn;
 const styles = StyleSheet.create({
     area: {
         flex: 1,

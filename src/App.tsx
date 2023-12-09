@@ -1,18 +1,16 @@
-import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
-import { MyInput } from "./components/MyInput";
-import SignInView from "./Views/SignInView";
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import RootNavigator from "./Modules/navigation/rootNavigator";
+import RootNavigator from "./modules/navigation/rootNavigator";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 
 const App = () => {
 
   return (
-   
-<NavigationContainer>
-  <RootNavigator/>
-</NavigationContainer>
+   <SafeAreaProvider>
+       <RootNavigator/>
+   </SafeAreaProvider>
+
   )
 };
 

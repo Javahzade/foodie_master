@@ -1,9 +1,9 @@
 import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
-import { MyInput } from "../../components/MyInput";
+import { MyInput } from "../../components/MyInput"
 
 
-const SignUpView = () => {
+const SignUp = () => {
   const [nameValue, setNameValue] = useState('');
   const[emailValue,setEmailValue]=useState('');
   const[passwordValue,setPasswordValue]=useState('');
@@ -39,7 +39,7 @@ const SignUpView = () => {
   )
 };
 
-export default SignUpView;
+export default SignUp;
 const styles = StyleSheet.create({
   area: {
     flex: 1,
