@@ -1,42 +1,87 @@
-import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
-import { MyInput } from "../../components/MyInput"
-
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
+import React, {useState} from 'react';
+import {MyInput} from '../../components/MyInput';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import auth from '@react-native-firebase/auth';
+import {useNavigation} from '@react-navigation/native';
 
 const SignUp = () => {
+  const navigation = useNavigation();
   const [nameValue, setNameValue] = useState('');
-  const[emailValue,setEmailValue]=useState('');
-  const[passwordValue,setPasswordValue]=useState('');
+  const [emailValue, setEmailValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
 
   const onChangeName = (text: string) => {
-    setNameValue(text)
-  }
-  const onChangeEmail= (text: string) =>{
-    setEmailValue(text)
-  }
-  const onChangePassword= (text: string) =>{
-    setPasswordValue(text)
-  }
+    setNameValue(text);
+  };
+  const onChangeEmail = (text: string) => {
+    setEmailValue(text);
+  };
+  const onChangePassword = (text: string) => {
+    setPasswordValue(text);
+  };
+
+  const handleSignUp = () => {
+    auth()
+      .createUserWithEmailAndPassword(emailValue, passwordValue)
+      .then(response => {
+        return response.user.updateProfile({displayName: nameValue});
+      })
+      .catch(err => console.warn(err));
+  };
 
   return (
     <SafeAreaView style={styles.area}>
       <View style={styles.header}>
-        <Text style={styles.h1}>Hello,</Text>
-        <Text style={styles.h2}>Welcome Back!</Text>
+        <Text style={styles.h1}>Create an account</Text>
+        <Text style={styles.h2}>
+          Let’s help you set up your account, it won’t take long.
+        </Text>
       </View>
-      <View style={styles.inputs}>
-        <MyInput title="Name" placeholder="Enter Name" onChangeText={onChangeName} />
-        <MyInput title="Email" placeholder="Enter Email"  onChangeText={onChangePassword}/>
-        <MyInput title="Password" placeholder="Enter Password"  secureTextEntry onChangeText={onChangePassword} />
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Sign Up</Text>
-        </TouchableOpacity>
-      </View>
+      <KeyboardAvoidingView
+        style={styles.keyboard}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <View style={styles.inputs}>
+          <MyInput
+            title="Name"
+            placeholder="Enter Name"
+            onChangeText={onChangeName}
+          />
+          <MyInput
+            title="Email"
+            autoCapitalize="none"
+            placeholder="Enter Email"
+            onChangeText={onChangeEmail}
+          />
+          <MyInput
+            autoCapitalize="none"
+            title="Password"
+            placeholder="Enter Password"
+            secureTextEntry
+            onChangeText={onChangePassword}
+          />
+          <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+            <Text style={styles.buttonText}>Sign Up</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
       <View style={styles.footer}>
-        <Text style={styles.h3}>Don’t have an account? <Text style={styles.h4}>Sign up</Text></Text>
+        <Text style={styles.h3}>
+          Already a member?{' '}
+          <Text style={styles.h4} onPress={() => navigation.navigate('SignIn')}>
+            Sign in
+          </Text>
+        </Text>
       </View>
     </SafeAreaView>
-  )
+  );
 };
 
 export default SignUp;
@@ -44,53 +89,56 @@ const styles = StyleSheet.create({
   area: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-    paddingHorizontal:30,
+    paddingHorizontal: 30,
   },
-  header:{
-    marginTop:50
+  keyboard: {
+    flex: 1,
   },
-  inputs:{
-    flex:1,
-    gap:24,
-    justifyContent:'center'
+  header: {
+    marginTop: 20,
+  },
+  inputs: {
+    flex: 1,
+    gap: 24,
+    justifyContent: 'center',
   },
   h1: {
-    color:'#000000',
+    color: '#000000',
     fontSize: 30,
     fontWeight: '600',
   },
   h2: {
-    color:'#121212',
-    fontSize: 20,
+    color: '#121212',
+    fontSize: 11,
     fontWeight: '400',
   },
-  h3:{
-    color:'#121212',
-    fontSize:16,
-    fontWeight:'500',
-    textAlign:'center',
+  h3: {
+    color: '#121212',
+    fontSize: 16,
+    fontWeight: '500',
+    textAlign: 'center',
   },
-  h4:{
-    color:'#FF9C00',
+  h4: {
+    color: '#FF9C00',
   },
-  text:{
-    fontSize:24,
-    marginBottom:20,
-    color:'#129575'
+  text: {
+    fontSize: 24,
+    marginBottom: 20,
+    color: '#129575',
   },
-  button:{
-    height:60,
-    backgroundColor:'#129575',
-    borderRadius:10,
-    justifyContent:'center',
-    alignItems:'center'
+  button: {
+    height: 60,
+    backgroundColor: '#129575',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  buttonText:{
-    color:'white',
-    fontSize:16,
-    fontWeight:'400',
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '400',
   },
-  footer:{
-    marginBottom:16
-  }
-})
+  footer: {
+    marginBottom: 16,
+  },
+});
