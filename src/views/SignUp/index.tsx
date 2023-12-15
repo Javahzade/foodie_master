@@ -6,17 +6,17 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import React, {useState} from 'react';
-import {MyInput} from '../../components/MyInput';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import auth from '@react-native-firebase/auth';
-import {useNavigation} from '@react-navigation/native';
+import React, { useState } from 'react';
+import { MyInput } from '../../components/MyInput';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
 
 const SignUp = () => {
   const navigation = useNavigation();
   const [nameValue, setNameValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
+  const [confirmPasswordValue, setConfirmPasswordValue] = useState('');
 
   const onChangeName = (text: string) => {
     setNameValue(text);
@@ -27,12 +27,15 @@ const SignUp = () => {
   const onChangePassword = (text: string) => {
     setPasswordValue(text);
   };
+  const onChangeConfirmPassword = (text: string) => {
+    setConfirmPasswordValue(text);
+  };
 
   const handleSignUp = () => {
     auth()
       .createUserWithEmailAndPassword(emailValue, passwordValue)
       .then(response => {
-        return response.user.updateProfile({displayName: nameValue});
+        return response.user.updateProfile({ displayName: nameValue });
       })
       .catch(err => console.warn(err));
   };
@@ -66,6 +69,13 @@ const SignUp = () => {
             placeholder="Enter Password"
             secureTextEntry
             onChangeText={onChangePassword}
+          />
+          <MyInput
+            autoCapitalize="none"
+            title="Confirm Password"
+            placeholder="Confirm Password"
+            secureTextEntry
+            onChangeText={onChangeConfirmPassword}
           />
           <TouchableOpacity style={styles.button} onPress={handleSignUp}>
             <Text style={styles.buttonText}>Sign Up</Text>
