@@ -30,7 +30,11 @@ const SignIn = () => {
   };
 
   const handleLogin = () => {
-    auth().signInWithEmailAndPassword(emailValue, passwordValue);
+    auth().signInWithEmailAndPassword(emailValue, passwordValue).then(() => {
+      console.log('hello')
+    }).catch((error) => {
+      console.warn('errorSignging', error)
+    })
   };
 
   return (
@@ -58,7 +62,7 @@ const SignIn = () => {
           />
           <TouchableOpacity style={styles.button} onPress={handleLogin}>
             <Text style={styles.buttonText}>Sign In</Text>
-            <View style={{position:'absolute',right:14}}>
+            <View style={{ position: 'absolute', right: 14 }}>
               <ArrowRightIcon color={'white'} />
             </View>
           </TouchableOpacity>

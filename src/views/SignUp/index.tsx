@@ -11,6 +11,7 @@ import { MyInput } from '../../components/MyInput';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import ArrowRightIcon from '../../assets/svg/arrowRightIcon.svg'
+import auth from '@react-native-firebase/auth'
 const SignUp = () => {
   const navigation = useNavigation();
   const [nameValue, setNameValue] = useState('');
@@ -79,7 +80,7 @@ const SignUp = () => {
           />
           <TouchableOpacity style={styles.button} onPress={handleSignUp}>
             <Text style={styles.buttonText}>Sign Up</Text>
-            <View style={{position:'absolute',right:14}}>
+            <View style={{ position: 'absolute', right: 14 }}>
               <ArrowRightIcon color={'white'} />
             </View>
           </TouchableOpacity>
