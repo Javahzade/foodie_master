@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,12 +7,11 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import React, {useState} from 'react';
-import {MyInput} from '../../components/MyInput';
-import {useNavigation} from '@react-navigation/native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { MyInput } from '../../components/MyInput';
+import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import auth from '@react-native-firebase/auth';
-
+import ArrowRightIcon from '../../assets/svg/ArrowRightIcon.svg'
 const SignIn = () => {
   const navigation = useNavigation();
 
@@ -58,6 +58,9 @@ const SignIn = () => {
           />
           <TouchableOpacity style={styles.button} onPress={handleLogin}>
             <Text style={styles.buttonText}>Sign In</Text>
+            <View style={{position:'absolute',right:14}}>
+              <ArrowRightIcon color={'white'} />
+            </View>
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>

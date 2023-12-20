@@ -1,7 +1,7 @@
 import React from 'react';
-import RootNavigator from './modules/navigation/rootNavigator';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {StyleSheet} from 'react-native';
+import RootNavigator from './modules/navigation/rootNavigator';
 
 const App = () => {
   return (
